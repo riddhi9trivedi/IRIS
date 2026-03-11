@@ -1,6 +1,0 @@
-Currently selected window has been closed
-Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
-System info: host: '91KRMH3', ip: '172.31.150.137', os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '24.0.1'
-Driver info: io.appium.java_client.windows.WindowsDriver
-Capabilities {app: com.manh.storeui_0ke3e0bm2c..., deviceName: WindowsPC, javascriptEnabled: true, platform: WINDOWS, platformName: Windows}
-Session ID: a10f6e57-141e-48be-8aa4-81c3a466a9f6

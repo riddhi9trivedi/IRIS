@@ -1,1 +1,0 @@
-org.openqa.selenium.TimeoutException: Expected condition failed: waiting for element to be clickable: By.name: Apply (tried for 10 second(s) with 500 milliseconds interval)

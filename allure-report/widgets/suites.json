@@ -1,1 +1,0 @@
-{"total":2,"items":[{"uid":"7fbdd819b92ae51c612b945498ec0017","name":"POS Suite","statistic":{"failed":0,"broken":23,"skipped":4,"passed":5,"unknown":0,"total":32}},{"uid":"2c8837b97293ea01a164a5cd7048ad56","name":"Default suite","statistic":{"failed":0,"broken":4,"skipped":1,"passed":1,"unknown":0,"total":6}}]}
