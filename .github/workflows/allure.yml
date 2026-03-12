@@ -6,35 +6,40 @@ on:
   workflow_dispatch:
 
 jobs:
-
   deploy:
 
     runs-on: windows-latest
 
     steps:
 
+      # 1️⃣ Checkout repo
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Prepare Allure results folder
+      # 2️⃣ Prepare Allure results folder
       - name: Prepare Allure Results Folder
+        shell: pwsh
         run: |
-          mkdir -p target/allure-results
+          if (-Not (Test-Path -Path "target\allure-results")) {
+            New-Item -ItemType Directory -Path "target\allure-results"
+          }
 
-      # Copy environment properties for Environment tab
+      # 3️⃣ Copy environment properties for Environment tab
       - name: Copy Allure Environment
-        run: cp allure-config/environment.properties target/allure-results/
+        shell: pwsh
+        run: Copy-Item -Path "allure-config\environment.properties" -Destination "target\allure-results\environment.properties" -Force
 
-      # Copy previous history for Trends tab
+      # 4️⃣ Copy previous history for Trends tab
       - name: Copy Allure History
+        shell: pwsh
         run: |
-          if [ -d allure-history ]; then
-            cp -r allure-history/* target/allure-results/
-          fi
+          if (Test-Path -Path "allure-history") {
+            Copy-Item -Path "allure-history\*" -Destination "target\allure-results" -Recurse -Force
+          }
 
-      # Deploy the manually committed report to GitHub Pages
+      # 5️⃣ Deploy the manually committed report to GitHub Pages
       - name: Deploy Existing Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./target/allure-report  # <- your manually committed report
+          publish_dir: ./target/allure-report
