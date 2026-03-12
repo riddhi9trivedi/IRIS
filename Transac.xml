@@ -1,0 +1,28 @@
+<suite name="POS Suite">
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+        <listener class-name="utils.TestListener"/>
+    </listeners>
+<test name="POS Test - User1">
+        <parameter name="username" value="strmgr_can"/>
+        <parameter name="password" value="Welcome21!"/>
+
+        <classes>
+            <class name="Testcases.Transaction1"/>
+            <class name="Testcases.Return"/>
+            <class name="Testcases.Exchanges"/>
+        </classes>
+    </test>
+
+    <test name="POS Test - User2">
+        <parameter name="username" value="strassoc_can"/>
+        <parameter name="password" value="Welcome21!"/>
+
+        <classes>
+            <class name="Testcases.Transaction1"/>
+            <class name="Testcases.Return"/>
+            <class name="Testcases.Exchanges"/>
+        </classes>
+    </test>
+
+</suite>
