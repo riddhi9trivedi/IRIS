@@ -1,11 +1,12 @@
-name: Deploy Allure Report
+name: Deploy Allure Report with Trends and Environment
 
 on:
   push:
     branches: [ master ]
-  workflow_dispatch:  # allows manual trigger in GitHub UI
+  workflow_dispatch:
 
 jobs:
+
   deploy:
 
     runs-on: windows-latest
@@ -15,8 +16,25 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      # Prepare Allure results folder
+      - name: Prepare Allure Results Folder
+        run: |
+          mkdir -p target/allure-results
+
+      # Copy environment properties for Environment tab
+      - name: Copy Allure Environment
+        run: cp allure-config/environment.properties target/allure-results/
+
+      # Copy previous history for Trends tab
+      - name: Copy Allure History
+        run: |
+          if [ -d allure-history ]; then
+            cp -r allure-history/* target/allure-results/
+          fi
+
+      # Deploy the manually committed report to GitHub Pages
       - name: Deploy Existing Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./target/allure-report  # <- point to your existing report
+          publish_dir: ./target/allure-report  # <- your manually committed report
