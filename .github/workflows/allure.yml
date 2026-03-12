@@ -3,7 +3,7 @@ name: Run Tests and Deploy Allure Report
 on:
   push:
     branches:
-      - main
+      - master
   workflow_dispatch:
 
 jobs:
@@ -11,42 +11,41 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
 
-    - name: Set up Java
-      uses: actions/setup-java@v3
-      with:
-        distribution: temurin
-        java-version: 17
+      - name: Run Tests
+        run: mvn clean test
 
-    - name: Run Tests
-      run: mvn clean test
+      - name: Get Allure history
+        uses: actions/checkout@v3
+        if: always()
+        with:
+          ref: gh-pages
+          path: gh-pages
 
-    - name: Get Allure history
-      uses: actions/checkout@v3
-      if: always()
-      with:
-        ref: gh-pages
-        path: gh-pages
+      - name: Install Allure
+        run: |
+          sudo apt-add-repository ppa:qameta/allure
+          sudo apt-get update
+          sudo apt-get install allure
 
-    - name: Install Allure
-      run: |
-        sudo apt-add-repository ppa:qameta/allure
-        sudo apt-get update
-        sudo apt-get install allure
+      - name: Generate Allure Report
+        run: |
+          allure generate target/allure-results \
+            --clean \
+            -o allure-report \
+            --history gh-pages/history
 
-    - name: Generate Allure Report
-      run: |
-        allure generate target/allure-results \
-        --clean \
-        -o allure-report \
-        --history gh-pages/history
-
-    - name: Deploy report to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      if: always()
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./allure-report
+      - name: Deploy report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./allure-report
