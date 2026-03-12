@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [POS Suite]">
+  <listeners>
+    <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+    <listener class-name="utils.TestListener"/>
+  </listeners>
+  <test thread-count="5" name="POS Test - User2(failed)">
+    <parameter name="password" value="Welcome21!"/>
+    <parameter name="username" value="strassoc_can"/>
+    <classes>
+      <class name="Testcases.Exchanges">
+        <methods>
+          <include name="NegativeExchanges"/>
+          <include name="teardown"/>
+          <include name="setup"/>
+          <include name="PositiveExchanges"/>
+          <include name="EqualExchanges"/>
+        </methods>
+      </class> <!-- Testcases.Exchanges -->
+      <class name="Testcases.Return">
+        <methods>
+          <include name="setup"/>
+          <include name="verifyReturnFlow"/>
+          <include name="teardown"/>
+        </methods>
+      </class> <!-- Testcases.Return -->
+      <class name="Testcases.Transaction1">
+        <methods>
+          <include name="loginAndCheckoutFlow"/>
+          <include name="verifyTransactionOrderNumber"/>
+          <include name="validateitemdata"/>
+          <include name="teardown"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- Testcases.Transaction1 -->
+    </classes>
+  </test> <!-- POS Test - User2(failed) -->
+</suite> <!-- Failed suite [POS Suite] -->
