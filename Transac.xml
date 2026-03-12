@@ -9,8 +9,8 @@
 
         <classes>
             <class name="Testcases.Transaction1"/>
-            <class name="Testcases.Return"/>
-            <class name="Testcases.Exchanges"/>
+        <class name="Testcases.Return"/>..
+      <class name="Testcases.Exchanges"/>
         </classes>
     </test>
 
