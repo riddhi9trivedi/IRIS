@@ -1,4 +1,4 @@
-name: Generate Allure Report
+name: Deploy Allure Report
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:  # allows manual trigger in GitHub UI
 
 jobs:
-  build:
+  deploy:
 
     runs-on: windows-latest
 
@@ -15,20 +15,8 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: temurin
-          java-version: 17
-
-      - name: Build Project
-        run: mvn clean install -DskipTests
-
-      - name: Generate Allure Report
-        run: mvn allure:report
-
-      - name: Deploy Allure Report to GitHub Pages
+      - name: Deploy Existing Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./target/site/allure-maven-plugin
+          publish_dir: ./target/allure-report  # <- point to your existing report
